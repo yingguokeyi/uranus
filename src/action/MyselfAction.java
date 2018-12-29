@@ -527,4 +527,13 @@ public class MyselfAction extends BaseServlet {
 			return creatResult(1, "提交成功", null).toString();
 		}
 	}
+
+	//发现接口
+	public static String getArticleList(){
+		String res = MyselfService.getArticleList();
+		JSONObject result = JSONObject.parseObject(res);
+		HashMap<String, Object> resMap = new HashMap<String, Object>();
+		resMap.put("result", result);
+		return creatResult(1, "亲,数据包回来了哦...", resMap).toString();
+	}
 }

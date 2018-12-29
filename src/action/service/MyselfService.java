@@ -501,4 +501,10 @@ public  class MyselfService extends BaseService{
 		String res = ResultPoor.getResult(sid);
 		return res;
 	}
+
+	public static String getArticleList(){
+		int sid = sendObject(1003,PropertiesConf.HESTIA_URL_CE);
+		String res = ResultPoor.getResult(sid);
+		return res;
+	}
 }
