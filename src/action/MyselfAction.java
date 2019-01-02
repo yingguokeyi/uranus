@@ -536,4 +536,49 @@ public class MyselfAction extends BaseServlet {
 		resMap.put("result", result);
 		return creatResult(1, "亲,数据包回来了哦...", resMap).toString();
 	}
+
+	public static String getArticleGroupList(){
+
+		String articleTime = MyselfService.getArticleTime();
+		JSONObject articleTimeJson = JSONObject.parseObject(articleTime);
+		int size = articleTimeJson.getJSONObject("result").getJSONArray("rs").size();
+
+		HashMap<String,Object> resultMapAll = new HashMap<String,Object>();
+		List<Map<String,Object>> listAll = new ArrayList<Map<String,Object>>();
+
+		for (int i=0;i<size;i++){
+			JSONObject jsonObject = articleTimeJson.getJSONObject("result").getJSONArray("rs").getJSONObject(i);
+			String edit_time = jsonObject.getString("edit_time");
+			String articleGroupList = MyselfService.getArticleGroupList(edit_time);
+			JSONObject articleGroupListJson = JSONObject.parseObject(articleGroupList);
+			int size2 = articleGroupListJson.getJSONObject("result").getJSONArray("rs").size();
+			List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+			HashMap<String,Object> resultTime = new HashMap<String,Object>();
+
+			for (int j=0;j<size2;j++){
+
+				HashMap<String,Object> resultMap = new HashMap<String,Object>();
+				JSONObject jsonGroupObject = articleGroupListJson.getJSONObject("result").getJSONArray("rs").getJSONObject(j);
+				String id = jsonGroupObject.getString("id");
+				String article_title = jsonGroupObject.getString("article_title");
+				String article_source = jsonGroupObject.getString("article_source");
+				String link_address = jsonGroupObject.getString("link_address");
+				String image = jsonGroupObject.getString("image");
+				String create_time = jsonGroupObject.getString("create_time");
+				resultMap.put("id",id);
+				resultMap.put("article_title",article_title);
+				resultMap.put("article_source",article_source);
+				resultMap.put("link_address",link_address);
+				resultMap.put("image",image);
+				resultMap.put("create_time",create_time);
+				list.add(resultMap);
+			}
+			resultTime.put("edit_time",edit_time);
+			resultTime.put("list",list);
+			listAll.add(resultTime);
+		}
+		resultMapAll.put("result", listAll);
+		return creatResult(1, "亲,数据包回来了哦...", resultMapAll).toString();
+
+	}
 }

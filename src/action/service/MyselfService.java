@@ -507,4 +507,16 @@ public  class MyselfService extends BaseService{
 		String res = ResultPoor.getResult(sid);
 		return res;
 	}
+
+	public static String getArticleTime(){
+		int sid = sendObject(1004);
+		String res = ResultPoor.getResult(sid);
+		return res;
+	}
+
+	public static String getArticleGroupList(String edit_time){
+		int sid = sendObject(1005,PropertiesConf.HESTIA_URL_CE,edit_time);
+		String res = ResultPoor.getResult(sid);
+		return res;
+	}
 }
